@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+
+{% block title %}Upload{% endblock %}
+
+{% block styles %}
+    body {
+        background-color: #f8f9fa;
+    }
+    .container {
+        padding: 3rem 1.5rem;
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        font-size: 2rem;
+        color: #343a40;
+        text-align: center;
+    }
+    form {
+        margin-top: 2rem;
+    }
+    .btn-primary {
+        display: block;
+        width: 100%;
+        padding: 0.75rem;
+    }
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Upload a File</h1>
+        
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {# Render form fields individually for better Bootstrap integration #}
+            <div class="form-group">
+                <label for="id_title">File Title:</label>
+                {{ form.title }}
+            </div>
+
+            <div class="form-group mt-3">
+                <label for="id_description">Description:</label>
+                {{ form.description }}
+            </div>
+
+            <div class="form-group mt-3">
+                <label for="id_keywords">Keywords (comma-separated):</label>
+                {{ form.keywords }}
+            </div>
+
+            <div class="form-group mt-3">
+                <label for="id_file">Upload any files associated with your project:</label>
+                {{ form.file }}
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Upload</button>
+        </form>
+    </div>
+{% endblock %}

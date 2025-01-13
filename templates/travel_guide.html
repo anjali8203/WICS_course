@@ -1,0 +1,99 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Travel Guide{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Lets Explore!</h1>
+
+    
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2>How to Use Our App</h2>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Getting Started with Your Travel Project</h5>
+                    <ol>
+                        <li><strong>Create a Project:</strong> Click on "Create a project" from your dashboard. Upload your travel itinerary or start from scratch.</li>
+                        <li><strong>Join a Project:</strong> If you're traveling with friends, ask them for the project code and use it to join their travel plan.</li>
+                        <li><strong>Edit Your Itinerary:</strong> Add destinations, activities, and important details to your travel plan.</li>
+                        <li><strong>Collaborate:</strong> Invite others to view or edit your project for group planning.</li>
+                        <li><strong>Access Travel Tips:</strong> Use our built-in travel guide for destination information and travel advice.</li>
+                        <li><strong>Stay Updated:</strong> Posts are continuously changing so please keep watch! </li>
+                    </ol>
+                    <a href="{% url 'create_project' %}" class="btn btn-primary">Start Your Travel Project Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <h2>Popular Destinations</h2>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Paris, France</h5>
+                    <p class="card-text">Known for its iconic Eiffel Tower, world-class cuisine, and romantic atmosphere.</p>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Tokyo, Japan</h5>
+                    <p class="card-text">A metropolis blending ultra-modern and traditional, with amazing food and culture.</p>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">New York City, USA</h5>
+                    <p class="card-text">The Big Apple offers world-famous attractions, diverse neighborhoods, and endless entertainment.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <h2>Travel Tips</h2>
+            <ul class="list-group">
+                <li class="list-group-item">Research your destination thoroughly</li>
+                <li class="list-group-item">Plan ahead</li>
+                <li class="list-group-item">Get travel insurance for peace of mind</li>
+                <li class="list-group-item">Learn a few phrases in the local language</li>
+                <li class="list-group-item">Eat new food, Explore and have fun!</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <h2>Popular Events</h2>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Oktoberfest</h5>
+                        <p class="card-text">In Munich, Germany celebrate beer, culture, and Bavarian heritage</p>
+                        <a href="https://www.oktoberfest.de/en" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Diwali</h5>
+                        <p class="card-text">Enjoy the color day of "Festival of Lights," where people light diyas to symbolize the victory of light over darkness</p>
+                        <a href="https://kids.nationalgeographic.com/pages/article/diwali" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Daikoku Car Meets</h5>
+                        <p class="card-text">"A heaven for all things automotive". Enjoy the breathtaking car culuture in Japan!</p>
+                        <a href="https://en.japantravel.com/kanagawa/daikoku-car-meet/69764" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load bootstrap5 %}
+
+{% block title %}Create New Project{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+    <h1>Create a New Project</h1>
+    <p>Fill out the form below to start a new project.</p>
+
+    <form method="post" action="{% url 'create_project' %}">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+
+        <p class="text-muted">
+            <strong>Note:</strong> Please enter the due date in the format YYYY-MM-DD (e.g., 2024-12-31).
+        </p>
+
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary btn-block">Create Project</button>
+        </div>
+    </form>
+
+    <a href="{% url 'pma_dashboard' %}" class="btn btn-secondary mt-3">Back to Dashboard</a>
+</div>
+{% endblock %}

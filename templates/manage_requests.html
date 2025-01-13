@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Join Requests{% endblock %}
+
+{% block styles %}
+    .container {
+        padding: 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    .list-group-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+    }
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Manage Join Requests for {{ project.title }}</h2>
+    
+    {% if requests %}
+        <ul class="list-group">
+            {% for request in requests %}
+                <li class="list-group-item">
+                    <span>{{ request.user.username }}</span>
+                    <form method="post" class="d-inline-flex">
+                        {% csrf_token %}
+                        <input type="hidden" name="user_id" value="{{ request.user.id }}">
+                        <button type="submit" name="action" value="accept" class="btn btn-success me-2">Accept</button>
+                        <button type="submit" name="action" value="decline" class="btn btn-danger">Decline</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No join requests at the moment.</p>
+    {% endif %}
+    
+    <a href="{% url 'project_detail' project.id %}" class="btn btn-secondary mt-3">Back to Project Details</a>
+</div>
+{% endblock %}

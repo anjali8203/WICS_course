@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% load bootstrap5 %}
+
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
+
+{% block title %}User Dashboard{% endblock %}
+    
+{% block styles %}
+    body {
+        background-color: #f0f4f8;
+    }
+
+    .dashboard-container {
+        padding: 2rem;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        color: #003366;
+        margin-bottom: 1.5rem;
+    }
+
+    .btn-description {
+        font-size: 0.9rem;
+        color: #6c757d;
+        margin-top: 0.5rem;
+    }
+
+    .action-buttons {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .action-card {
+        background-color: #ffffff;
+        border: 1px solid #d1d9e6;
+        border-radius: 8px;
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .action-card h4 {
+        color: #003366;
+        margin-bottom: 0.5rem;
+    }
+
+    .action-card .btn {
+        background-color: #0056b3;
+        color: white;
+        border: none;
+    }
+
+    .action-card .btn:hover {
+        background-color: #003366;
+    }
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Welcome Message -->
+    <h1>Welcome, {{ real_name }}!</h1>
+    <p>Manage your projects and explore the available options below.</p>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <!-- Create Project -->
+        <div class="action-card">
+            <h4>Create a Project</h4>
+            <p class="btn-description">Start a new project and manage its members, files, and messages.</p>
+            <a href="{% url 'create_project' %}" class="btn">Create Now</a>
+        </div>
+
+        <!-- View Owned Projects -->
+        <div class="action-card">
+            <h4>Your Projects</h4>
+            <p class="btn-description">View and manage projects you own, including files and members.</p>
+            <a href="{% url 'your_projects' %}" class="btn">View Projects</a>
+        </div>
+
+        <!-- View Member Projects -->
+        <div class="action-card">
+            <h4>Joined Projects</h4>
+            <p class="btn-description">Explore projects you're a member of and access their files and messages.</p>
+            <a href="{% url 'project_list' %}" class="btn">View Joined</a>
+        </div>
+
+        <!-- Explore All Projects -->
+        <div class="action-card">
+            <h4>Explore Projects</h4>
+            <p class="btn-description">View all available projects that you can join.</p>
+            <a href="{% url 'explore_projects' %}" class="btn">Explore All</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

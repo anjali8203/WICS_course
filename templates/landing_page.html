@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}SkyTracker - Landing Page{% endblock %}
+
+{% block styles %}
+    .hero {
+        background: linear-gradient(to bottom right, #007bff, #00aaff); /* Blue gradient */
+        color: #fff;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        padding: 80px 20px;
+        text-align: center;
+        margin: 2rem;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+        margin-top: 15px;
+    }
+
+    .features h3 {
+        margin-top: 15px;
+    }
+
+    .feature-icon {
+        font-size: 2.5rem;
+        color: #007bff;
+    }
+
+    .cta {
+        background-color: #007bff;
+        color: #fff;
+        padding: 30px 20px;
+        text-align: center;
+        border-radius: 8px;
+        margin-top: 30px;
+    }
+
+    .cta a {
+        color: #fff;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .cta a:hover {
+        text-decoration: underline;
+    }
+
+    .container {
+        max-width: 960px;
+        margin: 0 auto;
+    }
+
+    .btn-block {
+        width: 100%;
+    }
+
+    .btn-signup {
+        display: inline-block;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        padding: 15px 30px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 50px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease-in-out;
+        width: auto;
+        text-align: center;
+        margin: 20px auto;
+    }
+
+    .btn-signup:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+        text-decoration: none;
+    }
+{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Welcome to SkyTracker</h1>
+    <p>Share your travel plans, seek advice, and discover your next adventure</p>
+</div>
+
+<div id="features" class="container mt-4">
+    <h2 class="text-center">Why Use SkyTracker?</h2>
+    <div class="row mt-3">
+        <div class="col-md-4 text-center">
+            <i class="fa fa-plane feature-icon" style="font-size: 2rem;"></i>
+            <h3>Post Your Travel Plans</h3>
+            <p>Share itineraries, flights, pictures, and more with your trusted community for feedback and advice.</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <i class="fa fa-users feature-icon" style="font-size: 2rem;"></i>
+            <h3>Collaborate with Your Network</h3>
+            <p>Get insights and suggestions from the people you add to view your posts, making your trips even better.</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <i class="fa fa-map feature-icon" style="font-size: 2rem;"></i>
+            <h3>Explore Travel Ideas</h3>
+            <p>Discover curated travel suggestions and recommendations to inspire your next destination.</p>
+        </div>
+    </div>
+</div>
+
+<div class="text-center">
+    <form method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn-signup">Click Here to Sign Up Now</button>
+    </form>
+</div>
+{% endblock %}
