@@ -214,6 +214,7 @@ def city_landmarks(request, city_name):
             "city": "charlottesville",
             "points_required": 20,
             "reward": "$5 off your order",
+            "website": "https://www.bodosbagels.com/",
         },
         {
             "name": "Mudhouse Coffee",
@@ -221,6 +222,7 @@ def city_landmarks(request, city_name):
             "city": "charlottesville",
             "points_required": 30,
             "reward": "Free medium coffee",
+            "website": "https://mudhouse.com/?srsltid=AfmBOoohuZvPm9fhHaV4IvqHm1IaXaMQw3-ZEGHAdUL9vY-7Nia4K2M3",
         },
         {
             "name": "Royal Palace Cafe",
@@ -228,6 +230,7 @@ def city_landmarks(request, city_name):
             "city": "madrid",
             "points_required": 25,
             "reward": "Free dessert with any meal",
+            "website": "https://cafedeoriente.es/en/",
         },
         {
             "name": "Retiro Park Cafe",
@@ -235,6 +238,7 @@ def city_landmarks(request, city_name):
             "city": "madrid",
             "points_required": 15,
             "reward": "Free coffee with any pastry",
+            "website": "https://www.esmadrid.com/en/tourist-information/parque-del-retiro",
         },
     ]
 
@@ -253,13 +257,13 @@ def logout_view(request):
     # Redirect to home page or render a custom template
     return render(request, 'account/sign_out.html')
 
-@login_required
 def create_project(request):
     if request.method == 'POST':
         form = ProjectForm(request.POST)
         if form.is_valid():
             new_project = form.save(commit=False)
-            new_project.owner = request.user  # Setting the owner to the current user
+            new_project.owner = request.user  # Set the owner to the current user
+            new_project.city = form.cleaned_data['city']  # Save the selected city
             new_project.save()
             form.save_m2m()  # Save many-to-many relationships if applicable
             return redirect('user_dashboard')  # Redirect to dashboard or project detail
@@ -267,7 +271,7 @@ def create_project(request):
             return render(request, 'create_project.html', {'form': form})
     else:
         form = ProjectForm()
-        return render(request, 'create_project.html', {'form': form})
+    return render(request, 'create_project.html', {'form': form})
 
 
 @login_required

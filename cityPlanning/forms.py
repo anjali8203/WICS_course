@@ -2,6 +2,15 @@ from django import forms
 from .models import Message, Project
 
 class ProjectForm(forms.ModelForm):
+    CITY_CHOICES = [
+        ("", "Select a city"),  # Default empty option
+        ("charlottesville", "Charlottesville"),
+        ("madrid", "Madrid"),
+        # Add more cities as needed
+    ]
+
+    city = forms.ChoiceField(choices=CITY_CHOICES, required=True, label="Select a City")
+
     class Meta:
         model = Project
         fields = ['title', 'description', 'location']
