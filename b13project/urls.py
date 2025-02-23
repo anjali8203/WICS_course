@@ -32,7 +32,7 @@ urlpatterns = [
     path("login_redirect/", views.login_redirect, name="login_redirect"),
     path('your_projects/', views.your_projects, name='your_projects'),
     path("view_profile/", views.view_profile, name="view_profile"),
-    path('travel-guide/', views.travel_guide, name='travel_guide'),
+    # path('travel-guide/', views.travel_guide, name='travel_guide'),
     # path('project/vote/', views.vote, name='vote'),
     path('city/<str:city_name>/', views.city_landmarks, name='city_landmarks'),
 # Add project management URLs

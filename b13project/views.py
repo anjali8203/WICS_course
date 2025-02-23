@@ -175,8 +175,8 @@ def your_projects(request):
     return render(request, "your_projects.html", {"projects": projects})
 
 def landing_page(request):
-    if request.user.is_authenticated:  # Check if the user is logged in
-        return redirect("user_dashboard")  # Redirect to the user dashboard
+    # if request.user.is_authenticated:  # Check if the user is logged in
+    #     return redirect("user_dashboard")  # Redirect to the user dashboard
     return render(request, "landing_page.html")
 
 def city_landmarks(request, city_name):
@@ -227,10 +227,6 @@ def city_landmarks(request, city_name):
         "local_businesses": filtered_businesses,
     }
     return render(request, "landmarks.html", context)
-
-#travel guide information for user 
-def travel_guide(request):
-    return render(request, 'travel_guide.html')
 
 def logout_view(request):
     logout(request)  # This logs the user out

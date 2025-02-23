@@ -14,13 +14,13 @@ class Project(models.Model):
     def __str__(self):
         return self.title  
 
-class Vote(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    vote_type = models.IntegerField(default=0) # +1 means upvote, -1 means downvote, 0 means no vote
+# class Vote(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+#     vote_type = models.IntegerField(default=0) # +1 means upvote, -1 means downvote, 0 means no vote
 
-    def __str__(self):
-        return f"User: {self.user.first_name}, Project: {self.project.title}, Vote type: {self.vote_type}"
+#     def __str__(self):
+#         return f"User: {self.user.first_name}, Project: {self.project.title}, Vote type: {self.vote_type}"
 
 class Message(models.Model):
     project = models.ForeignKey(Project, related_name='messages', on_delete=models.CASCADE)
