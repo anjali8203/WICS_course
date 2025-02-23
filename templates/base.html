@@ -92,9 +92,6 @@
     </style>
 </head>
 
-
-
-
 <body>
     <header>
         <nav class="main_navbar navbar navbar-expand-sm">
@@ -134,7 +131,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <span class="nav-link">Points: 5</span>
+                        <span class="nav-link" id="pointsTracker">Points: {{ user_points }}</span>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown"
@@ -152,7 +149,6 @@
                 </ul>
             </div>
         </nav>
-
     </header>
     <main>
         {% block content %}

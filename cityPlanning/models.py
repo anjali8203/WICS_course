@@ -34,6 +34,7 @@ class Message(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    points = models.JSONField(default=dict)
     real_name = models.CharField(max_length=100)
     email = models.EmailField()
     date_joined = models.DateField(auto_now_add=True)

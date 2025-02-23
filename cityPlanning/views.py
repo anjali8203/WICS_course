@@ -1,24 +1,18 @@
-import boto3
 import logging
-import json
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.http import JsonResponse
 from .forms import ProjectForm, MessageForm
 from allauth.account.views import SignupView
 from django.contrib.auth import authenticate, login
 from allauth.account.views import LoginView
 from .models import UserProfile, Project
-from django.contrib.auth.models import User
 from django.conf import settings
-from django.core.files.base import File, ContentFile
+from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 from django.contrib.auth import logout, get_backends
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
 from django.contrib import messages
-from botocore.exceptions import ClientError
-from django.views.decorators.http import require_POST
 
 logger = logging.getLogger(__name__)
 
@@ -178,6 +172,23 @@ def landing_page(request):
     # if request.user.is_authenticated:  # Check if the user is logged in
     #     return redirect("user_dashboard")  # Redirect to the user dashboard
     return render(request, "landing_page.html")
+
+@csrf_exempt
+@login_required
+def update_points(request):
+    if request.method == 'POST':
+        import json
+        data = json.loads(request.body)
+        city = data.get('city')
+        points = data.get('points')
+
+        # Update the user's points for the city (example logic)
+        user_profile = request.user.profile
+        user_profile.points[city] = user_profile.points.get(city, 0) + points
+        user_profile.save()
+
+        return JsonResponse({'success': True, 'total_points': user_profile.points[city]})
+    return JsonResponse({'success': False})
 
 def city_landmarks(request, city_name):
     landmarks_dict = {

@@ -36,6 +36,7 @@ urlpatterns = [
     path('city/<str:city_name>/', views.city_landmarks, name='city_landmarks'),
 # Add project management URLs
     path('projects/owned/', views.your_projects, name='your_projects'),
+    path('update_points/', views.update_points, name='update_points'),
     path("projects/create/", views.create_project, name="create_project"),
     path("projects/<int:project_id>/", views.project_detail, name="project_detail"),
 
