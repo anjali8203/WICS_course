@@ -14,7 +14,14 @@ DEBUG = os.getenv("DEBUG", "True") == "True"
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
+    'city-explorer.herokuapp.com',
 ]
+
+IS_HEROKU_APP = os.getenv("ENV", "local") == "production"
+if not IS_HEROKU_APP:
+    DEBUG = True
+else:
+    DEBUG = False
 
 # Application definition
 INSTALLED_APPS = [
@@ -85,13 +92,29 @@ WSGI_APPLICATION = 'cityPlanning.wsgi.application'
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+# DATABASES = {
+#     'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+# }
 
+# Database configuration
+if IS_HEROKU_APP:
+    DATABASES = {
+            'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+    }
+
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
