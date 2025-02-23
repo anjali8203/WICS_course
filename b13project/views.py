@@ -81,19 +81,15 @@ def create_user_profile(request):
 
 def login_view(request):
     if request.method == 'POST':
-        role = request.POST.get('role')
-        if role == 'anonymous':
-            return redirect('anonymous_login')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('homepage')
         else:
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('homepage')
-            else:
-                # Return an 'invalid login' error message.
-                return render(request, 'login.html', {'error': 'Invalid username or password'})
+            # Return an 'invalid login' error message.
+            return render(request, 'login.html', {'error': 'Invalid username or password'})
     else:
         return render(request, 'login.html')
 
