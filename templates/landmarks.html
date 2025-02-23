@@ -11,10 +11,12 @@
             <div class="card mb-4 shadow-sm">
                 <div class="card-body">
                     <h5 class="card-title">
-                        <input type="checkbox" id="landmark-{{ forloop.counter }}" class="landmark-checkbox">
-                        <label for="landmark-{{ forloop.counter }}">{{ landmark }}</label>
+                        <input type="checkbox" id="landmark-{{ forloop.counter }}" class="landmark-checkbox"
+                            data-points="{{ landmark.points }}" data-landmark="{{ landmark.name }}">
+                        <label for="landmark-{{ forloop.counter }}">{{ landmark.name }}</label>
+                        <span class="badge bg-success">+{{ landmark.points }} points</span>
                     </h5>
-                    <p class="card-text">Explore this amazing location in {{ city_name|title }}.</p>
+                    <p class="card-text">{{ landmark.description }}</p>
                 </div>
             </div>
         </div>
@@ -25,8 +27,9 @@
 
     <!-- Button to Add Points -->
     <div class="text-center">
-        <button id="visitedButton" class="btn btn-primary">Visited {{ city_name|title }}, +5 points! Now, go ahead and
-            make your {{ city_name|title }} journal post!</button>
+        <a id="journalButton" href="{% url 'create_project' %}" class="btn btn-success btn-lg">
+            <i class="fas fa-book"></i> Make a Journal Entry!
+        </a>
     </div>
 
     <!-- Local Businesses Redemption Section -->
@@ -54,22 +57,69 @@
     </div>
 </div>
 
+<!-- Photo Upload Modal -->
+<div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="photoModalLabel">Upload Photo as Proof</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="photoForm">
+                    <div class="mb-3">
+                        <label for="photoInput" class="form-label">Choose a photo</label>
+                        <input type="file" class="form-control" id="photoInput" accept="image/*" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Upload</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+    // Track total points
+    let totalPoints = 0;
+
     // Handle landmark checkbox clicks
     document.querySelectorAll('.landmark-checkbox').forEach(checkbox => {
         checkbox.addEventListener('change', function () {
+            const points = parseInt(this.dataset.points);
+            const landmarkName = this.dataset.landmark;
+
             if (this.checked) {
-                alert(`You visited ${this.nextElementSibling.innerText}!`);
+                // Show the photo upload modal
+                const modal = new bootstrap.Modal(document.getElementById('photoModal'));
+                modal.show();
+
+                // Handle photo upload form submission
+                document.getElementById('photoForm').addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const fileInput = document.getElementById('photoInput');
+                    if (fileInput.files.length > 0) {
+                        // Simulate photo upload (frontend only)
+                        alert(`Photo uploaded for ${landmarkName}! You earned ${points} points.`);
+                        totalPoints += points;
+                        updateNavbarPoints(totalPoints);
+                        modal.hide();
+                    } else {
+                        alert('Please select a photo.');
+                    }
+                });
+            } else {
+                totalPoints -= points;
+                updateNavbarPoints(totalPoints);
             }
         });
     });
 
-    // Handle points button click
-    document.getElementById('visitedButton').addEventListener('click', function () {
-        let pointsElement = document.getElementById('pointsTracker');
-        let currentPoints = parseInt(pointsElement.textContent.split(' ')[1]);
-        let newPoints = currentPoints + 5;
-        pointsElement.textContent = 'Points: ' + newPoints;
-    });
+    // Update the points in the navbar
+    function updateNavbarPoints(points) {
+        const pointsElement = document.getElementById('pointsTracker');
+        if (pointsElement) {
+            pointsElement.textContent = `Points: ${points}`;
+        }
+    }
 </script>
 {% endblock %}

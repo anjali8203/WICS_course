@@ -192,8 +192,17 @@ def update_points(request):
 
 def city_landmarks(request, city_name):
     landmarks_dict = {
-        "charlottesville": ["The Rotunda", "Bodo's Bagels", "Downtown Mall"],
-        "madrid": ["Royal Palace of Madrid", "Plaza Mayor", "Retiro Park", "Prado Museum"]
+        "charlottesville": [
+            {"name": "The Rotunda", "description": "A historic building at UVA.", "points": 5},
+            {"name": "Bodo's Bagels", "description": "A popular bagel shop in Charlottesville.", "points": 3},
+            {"name": "Downtown Mall", "description": "A vibrant pedestrian mall.", "points": 4},
+        ],
+        "madrid": [
+            {"name": "Royal Palace of Madrid", "description": "The official residence of the Spanish royal family.", "points": 7},
+            {"name": "Plaza Mayor", "description": "A major public square in the heart of Madrid.", "points": 6},
+            {"name": "Retiro Park", "description": "A large and beautiful park in Madrid.", "points": 5},
+            {"name": "Prado Museum", "description": "One of the world's premier art museums.", "points": 8},
+        ],
     }
 
     landmarks = landmarks_dict.get(city_name.lower(), [])
