@@ -28,13 +28,13 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     path('login/', login_view, name='login'),
     path("create_profile/", views.create_user_profile, name="create_user_profile"),
-    # PMA STUFF 
     path("user_dashboard/", views.user_dashboard, name="user_dashboard"),
     path("login_redirect/", views.login_redirect, name="login_redirect"),
     path('your_projects/', views.your_projects, name='your_projects'),
     path("view_profile/", views.view_profile, name="view_profile"),
     path('travel-guide/', views.travel_guide, name='travel_guide'),
-    path('project/vote/', views.vote, name='vote'),
+    # path('project/vote/', views.vote, name='vote'),
+    path('city/<str:city_name>/', views.city_landmarks, name='city_landmarks'),
 # Add project management URLs
     path('projects/owned/', views.your_projects, name='your_projects'),
     path("projects/create/", views.create_project, name="create_project"),

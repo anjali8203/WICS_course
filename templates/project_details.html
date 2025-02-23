@@ -70,11 +70,11 @@ opacity: 0.6;
     </form>
     {% endif %}
 
-    {% if project.owner != request.user and request.user in project.members.all %}
+    <!-- {% if project.owner != request.user and request.user in project.members.all %}
     <form action="{% url 'leave_project' project.id %}" method="post">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">Leave Project</button>
     </form>
-    {% endif %}
+    {% endif %} -->
 </div>
 {% endblock %}

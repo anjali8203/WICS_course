@@ -2,13 +2,13 @@ import boto3
 import logging
 import json
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from .forms import ProjectForm, MessageForm
 from allauth.account.views import SignupView
-from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth import authenticate, login
 from allauth.account.views import LoginView
-from .models import UploadedFile, UserProfile, Project, Vote
+from .models import UserProfile, Project
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.core.files.base import File, ContentFile
@@ -165,12 +165,12 @@ def your_projects(request):
     """
     # Fetch projects owned by the user
     projects = Project.objects.filter(owner=request.user)
-    user_votes = Vote.objects.filter(user=request.user)
-    vote_dict = {vote.project.id: vote.vote_type for vote in user_votes}
+    # user_votes = Vote.objects.filter(user=request.user)
+    # vote_dict = {vote.project.id: vote.vote_type for vote in user_votes}
 
-    # apparently this 'user_vote' is a temporary field
-    for project in projects:
-        project.user_vote = vote_dict.get(project.id, None)
+    # # apparently this 'user_vote' is a temporary field
+    # for project in projects:
+    #     project.user_vote = vote_dict.get(project.id, None)
 
     return render(request, "your_projects.html", {"projects": projects})
 
@@ -178,6 +178,55 @@ def landing_page(request):
     if request.user.is_authenticated:  # Check if the user is logged in
         return redirect("user_dashboard")  # Redirect to the user dashboard
     return render(request, "landing_page.html")
+
+def city_landmarks(request, city_name):
+    landmarks_dict = {
+        "charlottesville": ["The Rotunda", "Bodo's Bagels", "Downtown Mall"],
+        "madrid": ["Royal Palace of Madrid", "Plaza Mayor", "Retiro Park", "Prado Museum"]
+    }
+
+    landmarks = landmarks_dict.get(city_name.lower(), [])
+
+    local_businesses = [
+        {
+            "name": "Bodo's Bagels",
+            "location": "Charlottesville",
+            "city": "charlottesville",
+            "points_required": 20,
+            "reward": "$5 off your order",
+        },
+        {
+            "name": "Mudhouse Coffee",
+            "location": "Charlottesville",
+            "city": "charlottesville",
+            "points_required": 30,
+            "reward": "Free medium coffee",
+        },
+        {
+            "name": "Royal Palace Cafe",
+            "location": "Madrid",
+            "city": "madrid",
+            "points_required": 25,
+            "reward": "Free dessert with any meal",
+        },
+        {
+            "name": "Retiro Park Cafe",
+            "location": "Madrid",
+            "city": "madrid",
+            "points_required": 15,
+            "reward": "Free coffee with any pastry",
+        },
+    ]
+
+    # Filter businesses by the selected city
+    filtered_businesses = [business for business in local_businesses if business["city"].lower() == city_name.lower()]
+
+    context = {
+        "city_name": city_name,
+        "landmarks": landmarks,
+        "local_businesses": filtered_businesses,
+    }
+    return render(request, "landmarks.html", context)
 
 #travel guide information for user 
 def travel_guide(request):
@@ -230,84 +279,73 @@ def post_project_message(request, project_id):
     return render(request, 'post_message.html', {'form': form, 'project': project})
 
 
-def project_list(request):
-    projects = Project.objects.all()
-    return render(request, 'projects_list.html', {'projects': projects})
+# def project_list(request):
+#     projects = Project.objects.all()
+#     return render(request, 'projects_list.html', {'projects': projects})
 
-@require_POST
-def vote(request):
-    try:
-        data = json.loads(request.body)
-        project_id = data.get("project_id")
-        vote_type = data.get("vote_type")
-        project = get_object_or_404(Project, id=project_id)
-
-
-        if vote_type == 'up' or vote_type == 'clear_down_up':
-            Vote.objects.update_or_create(**{"user": request.user, "project": project}, defaults={"vote_type": 1})
-        elif vote_type == 'down' or vote_type == 'clear_up_down':
-            Vote.objects.update_or_create(**{"user": request.user, "project": project}, defaults={"vote_type": -1})
-        else:
-            Vote.objects.update_or_create(**{"user": request.user, "project": project}, defaults={"vote_type": 0})
-
-        # have to redo these conditions since one button can be pressed while the other is still 'active'
-        if vote_type == 'up' or vote_type == 'clear_down':
-            project.votes += 1  
-        elif vote_type == 'down' or vote_type == 'clear_up':
-            project.votes -= 1
-        elif vote_type == 'clear_down_up':
-            project.votes += 2
-        elif vote_type == 'clear_up_down':
-            project.votes -= 2
-        project.save()  
+# @require_POST
+# def vote(request):
+#     try:
+#         data = json.loads(request.body)
+#         project_id = data.get("project_id")
+#         vote_type = data.get("vote_type")
+#         project = get_object_or_404(Project, id=project_id)
 
 
-        return JsonResponse({'success': True, 'votes': project.votes}) 
-    except Exception as e:
-        return JsonResponse({'success': False}) 
+#         if vote_type == 'up' or vote_type == 'clear_down_up':
+#             Vote.objects.update_or_create(**{"user": request.user, "project": project}, defaults={"vote_type": 1})
+#         elif vote_type == 'down' or vote_type == 'clear_up_down':
+#             Vote.objects.update_or_create(**{"user": request.user, "project": project}, defaults={"vote_type": -1})
+#         else:
+#             Vote.objects.update_or_create(**{"user": request.user, "project": project}, defaults={"vote_type": 0})
+
+#         # have to redo these conditions since one button can be pressed while the other is still 'active'
+#         if vote_type == 'up' or vote_type == 'clear_down':
+#             project.votes += 1  
+#         elif vote_type == 'down' or vote_type == 'clear_up':
+#             project.votes -= 1
+#         elif vote_type == 'clear_down_up':
+#             project.votes += 2
+#         elif vote_type == 'clear_up_down':
+#             project.votes -= 2
+#         project.save()  
+
+
+#         return JsonResponse({'success': True, 'votes': project.votes}) 
+#     except Exception as e:
+#         return JsonResponse({'success': False}) 
 
 @login_required
 def delete_project(request, project_id): 
     # Fetch the project object
     project = get_object_or_404(Project, id=project_id)
-    # Check if the current user is the owner or a PMA admin
-    if project.owner != request.user:
-        messages.error(request, "You are not authorized to delete this project.")
-        return redirect('project_detail', project_id=project_id)
-
-    if request.method == "POST":
-        # delete all files in the project as well
-        files = UploadedFile.objects.filter(project=project)
-        for file in files:
-            s3_delete(request, file)
-
         # Delete the project
-        project.delete()
-        messages.success(request, "Project deleted successfully.")
-        return redirect('user_dashboard')
+    project.delete()
+    messages.success(request, "Project deleted successfully.")
+    return redirect('user_dashboard')
 
-    # Render a confirmation page before deletion
-    return render(request, "deleteProjectConfirm.html", {"project": project})
+    # # Render a confirmation page before deletion
+    # return render(request, "deleteProjectConfirm.html", {"project": project})
 
-@login_required
-def request_to_join(request, project_id):
-    # if is_pma_administrator(request.user):
-    #     messages.error(request, "PMA Administrators cannot join projects.")
-    #     return redirect('explore_projects')
+# @login_required
+# def request_to_join(request, project_id):
+#     # if is_pma_administrator(request.user):
+#     #     messages.error(request, "PMA Administrators cannot join projects.")
+#     #     return redirect('explore_projects')
     
-    project = get_object_or_404(Project, id=project_id)
+#     project = get_object_or_404(Project, id=project_id)
     
-    # Check if the user is already a member or has already requested
-    if project.members.filter(id=request.user.id).exists():
-        messages.warning(request, "You are already a member of this project.")
-    elif JoinRequest.objects.filter(project=project, user=request.user).exists():
-        messages.warning(request, "You have already requested to join this project.")
-    else:
-        # Create a join request
-        JoinRequest.objects.create(project=project, user=request.user)
-        messages.success(request, "Your request to join has been sent.")
+#     # Check if the user is already a member or has already requested
+#     if project.members.filter(id=request.user.id).exists():
+#         messages.warning(request, "You are already a member of this project.")
+#     elif JoinRequest.objects.filter(project=project, user=request.user).exists():
+#         messages.warning(request, "You have already requested to join this project.")
+#     else:
+#         # Create a join request
+#         JoinRequest.objects.create(project=project, user=request.user)
+#         messages.success(request, "Your request to join has been sent.")
     
-    return redirect('explore_projects')
+#     return redirect('explore_projects')
 
 @login_required
 def leave_project(request, project_id):

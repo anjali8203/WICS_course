@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ city_name|title }} Landmarks{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">Top Landmarks in {{ city_name|title }}</h1>
+    <div class="row mt-4">
+        {% for landmark in landmarks %}
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <input type="checkbox" id="landmark-{{ forloop.counter }}" class="landmark-checkbox">
+                        <label for="landmark-{{ forloop.counter }}">{{ landmark }}</label>
+                    </h5>
+                    <p class="card-text">Explore this amazing location in {{ city_name|title }}.</p>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No landmarks found for this city.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Button to Add Points -->
+    <div class="text-center">
+        <button id="visitedButton" class="btn btn-primary">Visited {{ city_name|title }}, +5 points! Now, go ahead and
+            make your {{ city_name|title }} journal post!</button>
+    </div>
+
+    <!-- Local Businesses Redemption Section -->
+    <div class="mt-5">
+        <h2 class="text-center">Local Businesses Where You Can Redeem Your Points!</h2>
+        <p class="text-center">Support small businesses and enjoy exclusive rewards with your points.</p>
+        <div class="row mt-4">
+            {% for business in local_businesses %}
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ business.name }}</h5>
+                        <p class="card-text">
+                            <strong>Location:</strong> {{ business.location }}<br>
+                            <strong>Points Required:</strong> {{ business.points_required }}<br>
+                            <strong>Reward:</strong> {{ business.reward }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center">No partnered businesses found for this city.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+    // Handle landmark checkbox clicks
+    document.querySelectorAll('.landmark-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            if (this.checked) {
+                alert(`You visited ${this.nextElementSibling.innerText}!`);
+            }
+        });
+    });
+
+    // Handle points button click
+    document.getElementById('visitedButton').addEventListener('click', function () {
+        let pointsElement = document.getElementById('pointsTracker');
+        let currentPoints = parseInt(pointsElement.textContent.split(' ')[1]);
+        let newPoints = currentPoints + 5;
+        pointsElement.textContent = 'Points: ' + newPoints;
+    });
+</script>
+{% endblock %}

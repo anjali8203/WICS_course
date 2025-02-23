@@ -9,7 +9,6 @@
       <div class="card shadow-sm border-primary">
         <div class="card-body">
           <h2 class="card-title text-center mb-4">Sign up for SkyTracker</h2>
-          <p class="text-center text-muted mb-4">"Your journey to the skies starts with a simple sign-up!"</p>
           <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
@@ -37,20 +36,20 @@
     background: linear-gradient(to top, #87CEEB, #FFFFFF);
     min-height: 100vh;
   }
-  
+
   .border-primary {
     border-color: #007bff !important;
   }
-  
+
   .card {
     background-color: #f8f9fa;
   }
-  
+
   .btn-primary {
     background-color: #007bff;
     border-color: #007bff;
   }
-  
+
   .btn-outline-secondary {
     color: #6c757d;
     border-color: #6c757d;

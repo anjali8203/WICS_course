@@ -92,23 +92,6 @@ DATABASES = {
     }
 }
 
-# # Database configuration
-# if IS_HEROKU_APP:
-#     DATABASES = {
-#         "default": dj_database_url.config(
-#             default=os.getenv("DATABASE_URL"),
-#             conn_max_age=600,
-#             ssl_require=True,
-#         ),
-#     }
-
-# else:
-#     DATABASES = {
-#         "default": {
-#             "ENGINE": "django.db.backends.sqlite3",
-#             "NAME": BASE_DIR / "db.sqlite3",
-#         }
-#     }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -130,14 +113,6 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/accounts/login/"
-
-# # AWS S3 for static and media files
-# AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-# AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-# AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
-# AWS_S3_REGION_NAME = os.getenv("AWS_REGION", "us-east-2")
-# AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
-# AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"

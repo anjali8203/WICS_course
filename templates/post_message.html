@@ -3,13 +3,12 @@
 {% block content %}
 <div class="container mt-3">
     <h1>Post a Message in {{ project.title }}</h1>
-    <p>Type your message below to share with project members.</p>
 
     <!-- Display any messages -->
     {% if messages %}
     <div class="alert alert-info" role="alert">
         {% for message in messages %}
-            {{ message }}
+        {{ message }}
         {% endfor %}
     </div>
     {% endif %}
@@ -19,7 +18,8 @@
         {% csrf_token %}
         <div class="mb-3">
             <label for="content" class="form-label">Message:</label>
-            <textarea id="content" name="content" class="form-control" rows="3" placeholder="Enter your message here..."></textarea>
+            <textarea id="content" name="content" class="form-control" rows="3"
+                placeholder="Enter your message here..."></textarea>
         </div>
         <button type="submit" class="btn btn-primary">Post Message</button>
     </form>
