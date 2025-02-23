@@ -9,20 +9,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-ecrvtk2n!&hx%o3s8^32ghswoi04b*eovug@0-_x$3crw6gir-")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.getenv("DEBUG", "True") == "True"
+DEBUG = os.getenv("DEBUG", "True") == "True"
 
-#ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost 127.0.0.1 b13-3240-3733dd1580e5.herokuapp.com").split()
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "sky-tracker-99371ce36fbe.herokuapp.com",
 ]
-
-IS_HEROKU_APP = os.getenv("ENV", "local") == "production"
-if not IS_HEROKU_APP:
-    DEBUG = True
-else:
-    DEBUG = False
 
 # Application definition
 INSTALLED_APPS = [
@@ -41,14 +33,10 @@ INSTALLED_APPS = [
     "storages",
     "b13project"
 ]
-# "482799726962-g6vb6pvjoaadauj9rng32cloudaap2of.apps.googleusercontent.com"
-# "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"
 
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "APP": {
-            # "client_id": "482799726962-g6vb6pvjoaadauj9rng32cloudaap2of.apps.googleusercontent.com",
-            # "secret":  "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",
             "client_id": os.getenv("GOOGLE_CLIENT_ID"),
             "secret": os.getenv("GOOGLE_CLIENT_SECRET"),
             "key": "",
@@ -97,23 +85,30 @@ WSGI_APPLICATION = "b13project.wsgi.application"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Database configuration
-if IS_HEROKU_APP:
-    DATABASES = {
-        "default": dj_database_url.config(
-            default=os.getenv("DATABASE_URL"),
-            conn_max_age=600,
-            ssl_require=True,
-        ),
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
+}
 
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
+# # Database configuration
+# if IS_HEROKU_APP:
+#     DATABASES = {
+#         "default": dj_database_url.config(
+#             default=os.getenv("DATABASE_URL"),
+#             conn_max_age=600,
+#             ssl_require=True,
+#         ),
+#     }
+
+# else:
+#     DATABASES = {
+#         "default": {
+#             "ENGINE": "django.db.backends.sqlite3",
+#             "NAME": BASE_DIR / "db.sqlite3",
+#         }
+#     }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -136,19 +131,19 @@ ACCOUNT_EMAIL_VERIFICATION = "optional"
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_REDIRECT_URL = "/accounts/login/"
 
-# AWS S3 for static and media files
-AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
-AWS_S3_REGION_NAME = os.getenv("AWS_REGION", "us-east-2")
-AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
-AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
+# # AWS S3 for static and media files
+# AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+# AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+# AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+# AWS_S3_REGION_NAME = os.getenv("AWS_REGION", "us-east-2")
+# AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+# AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
+# MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 # Email backend
@@ -164,10 +159,4 @@ USE_TZ = True
 # Django site ID
 SITE_ID = 1
 
-# Heroku settings
-try:
-    import django_heroku
-    django_heroku.settings(locals())
-except ImportError:
-    pass
 

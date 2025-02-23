@@ -26,37 +26,37 @@ class ProjectForm(forms.ModelForm):
                 'style': 'margin-bottom: 1rem;'
             })
 
-class UploadFileForm(forms.ModelForm):
-    class Meta:
-        model = UploadedFile
-        fields = ['file', 'title', 'description', 'keywords']
+# class UploadFileForm(forms.ModelForm):
+#     class Meta:
+#         model = UploadedFile
+#         fields = ['file', 'title', 'description', 'keywords']
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # Add placeholders and Bootstrap classes to fields
-        self.fields['title'].widget.attrs.update({
-            'placeholder': 'Enter a title for your project',
-            'class': 'form-control',
-            'style': 'margin-bottom: 1rem;'
-        })
-        self.fields['description'].widget.attrs.update({
-            'placeholder': 'Provide a brief description of the project',
-            'class': 'form-control',
-            'style': 'margin-bottom: 1rem;'
-        })
-        self.fields['keywords'].widget.attrs.update({
-            'placeholder': 'Add keywords to help the project be quickly identified, separated by commas',
-            'class': 'form-control',
-            'style': 'margin-bottom: 1rem;'
-        })
-        self.fields['file'].widget.attrs.update({
-            'class': 'form-control-file',
-            'style': 'margin-bottom: 1rem;'
-        })
-        # Optional: Remove required attribute from fields
-        self.fields['title'].required = False
-        self.fields['description'].required = False
-        self.fields['keywords'].required = False
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         # Add placeholders and Bootstrap classes to fields
+#         self.fields['title'].widget.attrs.update({
+#             'placeholder': 'Enter a title for your project',
+#             'class': 'form-control',
+#             'style': 'margin-bottom: 1rem;'
+#         })
+#         self.fields['description'].widget.attrs.update({
+#             'placeholder': 'Provide a brief description of the project',
+#             'class': 'form-control',
+#             'style': 'margin-bottom: 1rem;'
+#         })
+#         self.fields['keywords'].widget.attrs.update({
+#             'placeholder': 'Add keywords to help the project be quickly identified, separated by commas',
+#             'class': 'form-control',
+#             'style': 'margin-bottom: 1rem;'
+#         })
+#         self.fields['file'].widget.attrs.update({
+#             'class': 'form-control-file',
+#             'style': 'margin-bottom: 1rem;'
+#         })
+#         # Optional: Remove required attribute from fields
+#         self.fields['title'].required = False
+#         self.fields['description'].required = False
+#         self.fields['keywords'].required = False
 
 class MessageForm(forms.ModelForm):
     class Meta:
@@ -71,7 +71,7 @@ class MessageForm(forms.ModelForm):
             'style': 'margin-bottom: 1rem;'
         })
 
-class AddMemberForm(forms.Form):
-    user_id = forms.IntegerField(
-        widget=forms.HiddenInput()
-    )
+# class AddMemberForm(forms.Form):
+#     user_id = forms.IntegerField(
+#         widget=forms.HiddenInput()
+#     )

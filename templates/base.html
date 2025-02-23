@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +16,8 @@
 
     <style>
         /* Ensure the body and html fill the viewport */
-        html, body {
+        html,
+        body {
             height: 100%;
             margin: 0;
             display: flex;
@@ -30,8 +32,10 @@
         }
 
         .main_navbar {
-            background: linear-gradient(to right, #3b85ce, #4a98f1); /* Gradient background */
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            background: linear-gradient(to right, #3b85ce, #4a98f1);
+            /* Gradient background */
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow */
         }
 
         .main_navbar .navbar-brand {
@@ -76,22 +80,29 @@
             padding: 1rem 0;
         }
 
-        {% block styles %}
-        {% endblock %}
+            {
+            % block styles %
+        }
+
+            {
+            % endblock %
+        }
     </style>
 </head>
 
 <body>
     <header>
         <nav class="main_navbar navbar navbar-expand-sm">
-                    <!-- Back Button -->
+            <!-- Back Button -->
             <a class="nav-link text-white mr-3" href="javascript:history.back()" style="font-size: 1.2rem;">
                 <i class="fas fa-arrow-left"></i> Back
             </a>
-            <a class="navbar-brand" href="{% url 'homepage' %}" style="font-family: 'Poppins', sans-serif; font-size: 1.8rem; font-weight: bold; color: #fff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">
+            <a class="navbar-brand" href="{% url 'homepage' %}"
+                style="font-family: 'Poppins', sans-serif; font-size: 1.8rem; font-weight: bold; color: #fff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">
                 <span style="color: #ADD8E6;">Sky</span><span style="color: #ffffff;">Tracker</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <ul class="navbar-nav ml-auto">
@@ -99,30 +110,25 @@
                     <a class="nav-link" href="{% url 'travel_guide' %}">Travel Guide</a>
                 </li>
                 {% if not user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account_login' %}">Login</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'account_login' %}">Login</a>
+                </li>
                 {% else %}
-                    {% if is_pma %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'pma_dashboard' %}">Dashboard</a>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'user_dashboard' %}">Dashboard</a>
-                        </li>
-                    {% endif %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <div class="profile-icon">
-                                <i class="fas fa-plane"></i>
-                            </div>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                            <li><a class="dropdown-item" href="{% url 'view_profile' %}">View Profile</a></li>
-                            <li><a class="dropdown-item" href="{% url 'account_logout' %}">Sign Out</a></li>
-                        </ul>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'user_dashboard' %}">Dashboard</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="profileDropdown"
+                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="profile-icon">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                        <li><a class="dropdown-item" href="{% url 'view_profile' %}">View Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'account_logout' %}">Sign Out</a></li>
+                    </ul>
+                </li>
                 {% endif %}
             </ul>
         </nav>
@@ -135,11 +141,5 @@
     {% block scripts %}
     {% endblock %}
 </body>
-<footer class="text-center py-4 mt-4 border-top">
-    <div class="container">
-        <p class="mb-0" style="font-size: 0.9em; opacity: 0.8;">
-            This system is a class project; the system is not monitored, and no real information should be submitted.
-        </p>
-    </div>
-</footer>
+
 </html>
