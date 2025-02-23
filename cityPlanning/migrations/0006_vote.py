@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('b13project', '0005_remove_uploadedfile_votes_project_votes'),
+        ('cityPlanning', '0005_remove_uploadedfile_votes_project_votes'),
     ]
 
     operations = [
@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('vote_type', models.IntegerField(default=0)),
-                ('project', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='b13project.project')),
+                ('project', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cityPlanning.project')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),

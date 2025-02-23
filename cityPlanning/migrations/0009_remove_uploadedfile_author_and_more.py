@@ -5,7 +5,7 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("b13project", "0008_remove_vote_hacky_sol"),
+        ('cityPlanning', "0008_remove_vote_hacky_sol"),
     ]
 
     operations = [

@@ -1,5 +1,4 @@
 """
-WSGI config for b13project project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +10,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "b13project.settings")
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cityPlanning.settings')
 
 application = get_wsgi_application()

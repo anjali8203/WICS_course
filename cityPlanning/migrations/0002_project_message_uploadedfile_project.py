@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ("b13project", "0001_initial"),
+        ('cityPlanning', '0001_initial'), 
     ]
 
     operations = [
@@ -71,7 +71,7 @@ class Migration(migrations.Migration):
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="messages",
-                        to="b13project.project",
+                        to="cityPlanning.project",
                     ),
                 ),
             ],
@@ -83,7 +83,7 @@ class Migration(migrations.Migration):
                 null=True,
                 on_delete=django.db.models.deletion.CASCADE,
                 related_name="files",
-                to="b13project.project",
+                to="cityPlanning.project",
             ),
         ),
     ]

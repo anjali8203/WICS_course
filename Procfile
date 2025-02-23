@@ -1,1 +1,1 @@
-web: gunicorn b13project.wsgi --log-file -
+web: gunicorn cityPlanning.wsgi --log-file -

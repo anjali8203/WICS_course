@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ("b13project", "0003_uploadedfile_votes"),
+        ('cityPlanning', "0003_uploadedfile_votes"),
     ]
 
     operations = [
@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="join_requests",
-                        to="b13project.project",
+                        to="cityPlanning.project",
                     ),
                 ),
                 (

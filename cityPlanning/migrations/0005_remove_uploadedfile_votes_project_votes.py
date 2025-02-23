@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('b13project', '0004_joinrequest'),
+        ('cityPlanning', '0004_joinrequest'),
     ]
 
     operations = [

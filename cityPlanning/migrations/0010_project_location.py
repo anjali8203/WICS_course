@@ -5,7 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("b13project", "0009_remove_uploadedfile_author_and_more"),
+        ('cityPlanning', "0009_remove_uploadedfile_author_and_more"),
     ]
 
     operations = [

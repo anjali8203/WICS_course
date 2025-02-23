@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount.providers.google",
     "bootstrap5",
     "storages",
-    "b13project"
+    "cityPlanning"
 ]
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -63,7 +63,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "b13project.urls"
+ROOT_URLCONF = 'cityPlanning.urls'
 
 TEMPLATES = [
     {
@@ -81,7 +81,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "b13project.wsgi.application"
+WSGI_APPLICATION = 'cityPlanning.wsgi.application'
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
